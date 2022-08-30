@@ -635,7 +635,15 @@ class _ProductChecker:
                 "The client noticed that the server is not Elasticsearch "
                 "and we do not support this unknown product"
             )
-        raise UnsupportedProductError(message)
+        warnings.warn(
+            (
+                "The client is unable to verify that the server is "
+                "Elasticsearch due security privileges on the server side"
+            ),
+            ElasticsearchWarning,
+            stacklevel=5,
+        )
+        #raise UnsupportedProductError(message)
 
     @classmethod
     def check_product(cls, headers, response):
